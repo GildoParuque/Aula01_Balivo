@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Aula01_Balivo.MainPage">
+
+    <StackLayout>
+        <Entry x:Name="txtCep"/>
+        <Button Text="Buscar" Clicked="Button_Clicked"/>
+        
+        <Label Text="Logradouro"/>
+        <Label x:Name="txtLogradouro"/>
+        <Label Text="Complemento"/>
+        <Label x:Name="txtComplemento"/>
+        <Label Text="Bairro"/>
+        <Label x:Name="txtxBairro"/>
+        <Label Text="Localidade"/>
+        <Label x:Name="txtLocalidade"/>
+        <Label Text="UF"/>
+        <Label x:Name="txtUF"/>
+
+
+
+
+
+
+    </StackLayout>
+
+</ContentPage>

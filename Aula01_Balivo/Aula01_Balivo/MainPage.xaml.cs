@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aula01_Balivo.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,41 +12,21 @@ namespace Aula01_Balivo
 {
     public partial class MainPage : ContentPage
     {
+        BuscaCepViewModel ViewModel { get => ((BuscaCepViewModel)BindingContext); }
         public MainPage()
         {
             InitializeComponent();
+
+            // = new BuscaCepViewModel();
         }
         private async void Button_Clicked(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtCep.Text))
+                if (string.IsNullOrWhiteSpace(ViewModel.CEP))
                     return;
 
-                using (var client = new HttpClient())
-                {
-                    //
-                    using (var response = await client.GetAsync($"https://viacep.com.br/ws/{txtCep.Text}/json/"))
-                    {
-                        response.EnsureSuccessStatusCode();
-
-                        var content = await response.Content.ReadAsStringAsync();
-
-                        if (string.IsNullOrWhiteSpace(content))
-                            throw new InvalidOperationException();
-
-                        var retorno = Newtonsoft.Json.JsonConvert.DeserializeObject<ViaCepDto>(content);
-
-                        if (retorno.erro)
-                            throw new InvalidOperationException();
-
-                        txtLogradouro.Text = retorno.logradouro;
-                        txtComplemento.Text = retorno.complemento;
-                        txtxBairro.Text = retorno.bairro;
-                        txtLocalidade.Text = retorno.bairro;
-                        txtUF.Text = retorno.uf;
-                    }
-                }
+               
             }catch(Exception ex)
             {
                await DisplayAlert("Oops","Algo de errado aconteceu", "Ok");

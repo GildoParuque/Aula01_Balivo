@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aula01_Balivo.Pages;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Aula01_Balivo
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new BuscaCepPage();
         }
 
         protected override void OnStart()

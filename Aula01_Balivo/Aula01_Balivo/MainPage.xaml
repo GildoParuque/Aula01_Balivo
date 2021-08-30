@@ -11,7 +11,7 @@
         <Label x:Name="txtLogradouro"/>
         <Label Text="Complemento"/>
         <Label x:Name="txtComplemento"/>
-        <Label Text="Bairro"/>
+        <Label Text="Bairro"/> 
         <Label x:Name="txtxBairro"/>
         <Label Text="Localidade"/>
         <Label x:Name="txtLocalidade"/>

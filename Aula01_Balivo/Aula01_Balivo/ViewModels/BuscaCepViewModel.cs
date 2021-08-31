@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Aula01_Balivo.Data.Dtos;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -22,7 +23,7 @@ namespace Aula01_Balivo.ViewModels
             }
         }
 
-        private ViaCepDto viaCepDto = null;
+        private CepDto viaCepDto = null;
 
         public bool HasCep { get => !(viaCepDto is null); }
         public string Logradouro{get => viaCepDto?.logradouro; } 
@@ -72,7 +73,7 @@ namespace Aula01_Balivo.ViewModels
                         if (string.IsNullOrWhiteSpace(content))
                             throw new InvalidOperationException();
 
-                        viaCepDto = JsonConvert.DeserializeObject<ViaCepDto>(content);
+                        viaCepDto = JsonConvert.DeserializeObject<CepDto>(content);
 
                         if (viaCepDto.erro)
                             throw new InvalidOperationException();

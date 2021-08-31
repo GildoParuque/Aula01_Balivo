@@ -12,27 +12,27 @@ namespace Aula01_Balivo
 {
     public partial class MainPage : ContentPage
     {
-        BuscaCepViewModel ViewModel { get => ((BuscaCepViewModel)BindingContext); }
+       // BuscaCepViewModel ViewModel { get => ((BuscaCepViewModel)BindingContext); }
         public MainPage()
         {
             InitializeComponent();
 
             // = new BuscaCepViewModel();
         }
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(ViewModel.CEP))
-                    return;
+        //private async void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    //try
+        //    //{
+        //    //    if (string.IsNullOrWhiteSpace(ViewModel.CEP))
+        //    //        return;
 
                
-            }catch(Exception ex)
-            {
-               await DisplayAlert("Oops","Algo de errado aconteceu", "Ok");
-            }
+        //    //}catch(Exception ex)
+        //    //{
+        //    //   await DisplayAlert("Oops","Algo de errado aconteceu", "Ok");
+        //    //}
            
-        }
+       // }
     }
 
     public class ViaCepDto

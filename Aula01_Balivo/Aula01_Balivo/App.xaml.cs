@@ -12,6 +12,7 @@ namespace Aula01_Balivo
             InitializeComponent();
 
             MainPage = new BuscaCepPage();
+
         }
 
         protected override void OnStart()

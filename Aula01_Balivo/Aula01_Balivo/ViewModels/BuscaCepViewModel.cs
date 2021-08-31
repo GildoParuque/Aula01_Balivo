@@ -23,11 +23,13 @@ namespace Aula01_Balivo.ViewModels
         }
 
         private ViaCepDto viaCepDto = null;
-        public string Logradouro{get => viaCepDto.logradouro; } 
-        public string Complemento{get => viaCepDto.complemento; }
-        public string Bairro{ get => viaCepDto.bairro;}
-        public string Localidade{ get => viaCepDto.localidade;}
-        public string UF{ get => viaCepDto.uf; }
+
+        public bool HasCep { get => !(viaCepDto is null); }
+        public string Logradouro{get => viaCepDto?.logradouro; } 
+        public string Complemento{get => viaCepDto?.complemento; }
+        public string Bairro{ get => viaCepDto?.bairro;}
+        public string Localidade{ get => viaCepDto?.localidade;}
+        public string UF{ get => viaCepDto?.uf; }
 
         private Command _BuscarCommand;
         public Command BuscarCommand
@@ -41,7 +43,7 @@ namespace Aula01_Balivo.ViewModels
             }
         }
 
-        private bool BuscarCommandCanExecute() => !string.IsNullOrWhiteSpace(CEP) && CEP.Length >= 8;
+        private bool BuscarCommandCanExecute() => !string.IsNullOrWhiteSpace(CEP) && CEP.Length >= 8 && IsNotBusy;
 
 
         //public Command BuscarCommand => _BuscarCommand ?? (_BuscarCommand = new Command(async () => await BuscarCommandExecute()));
@@ -50,8 +52,13 @@ namespace Aula01_Balivo.ViewModels
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(CEP))
+                //if (string.IsNullOrWhiteSpace(CEP))
+                //    return;
+                if (isBusy)
                     return;
+
+                isBusy = true;
+                BuscarCommand.ChangeCanExecute();
 
                 using (var client = new HttpClient())
                 {
@@ -65,22 +72,30 @@ namespace Aula01_Balivo.ViewModels
                         if (string.IsNullOrWhiteSpace(content))
                             throw new InvalidOperationException();
 
-                        var retorno = JsonConvert.DeserializeObject<ViaCepDto>(content);
+                        viaCepDto = JsonConvert.DeserializeObject<ViaCepDto>(content);
 
-                        if (retorno.erro)
+                        if (viaCepDto.erro)
                             throw new InvalidOperationException();
 
-                        Logradouro = retorno.logradouro;
-                        Complemento = retorno.complemento;
-                        Bairro = retorno.bairro;
-                        Localidade = retorno.bairro;
-                        UF  = retorno.uf;
+                       
                     }
                 }
             }
             catch (Exception ex)
             {
+                viaCepDto = null;
                 await App.Current.MainPage.DisplayAlert("Oops", "Algo de errado aconteceu", "Ok");
+            }
+            finally
+            {
+                OnPropertyChanged(nameof(HasCep));
+                OnPropertyChanged(nameof(Logradouro));
+                OnPropertyChanged(nameof(Complemento));
+                OnPropertyChanged(nameof(Bairro));
+                OnPropertyChanged(nameof(Localidade));
+                OnPropertyChanged(nameof(UF));
+                isBusy = false;
+                BuscarCommand.ChangeCanExecute();
             }
         }
     }
